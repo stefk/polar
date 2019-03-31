@@ -72,6 +72,11 @@ function drawPolar(ctx, expression, unitsPerAxe) {
 
   for (let t = 0; t < 2 * Math.PI; t += angleInc) {
     const r = expression.eval({ x: t });
+
+    if (r < 0) {
+      continue;
+    }
+
     const x = r * Math.cos(t);
     const y = r * Math.sin(t);
     points.push([x, y]);
