@@ -8,7 +8,7 @@ const mathjs = require("mathjs");
   const canvas2 = document.querySelector("#polar");
   const cartesianCtx = canvas1.getContext("2d");
   const polarCtx = canvas2.getContext("2d");
-  const unitsPerAxe = 16;
+  const unitsPerAxe = 8;
 
   const computedStyle = getComputedStyle(canvas1);
   const width = computedStyle.getPropertyValue("width");
