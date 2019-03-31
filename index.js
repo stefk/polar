@@ -50,7 +50,7 @@ function drawCartesian(ctx, expression, unitsPerAxe) {
   const xInc = unitsPerAxe / 10000;
   const points = [];
 
-  for (let x = -halfAxe; x < halfAxe; x += xInc ) {
+  for (let x = -halfAxe; x < halfAxe; x += xInc) {
     const y = expression.eval({ x });
     points.push([x, y]);
   }
