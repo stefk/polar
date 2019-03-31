@@ -9,19 +9,52 @@ const mathjs = require("mathjs");
   const polarCtx = canvas2.getContext("2d");
   const unitsPerAxe = 8;
 
+  const showcase = [
+    "3",
+    "x",
+    "x/10",
+    "2sin(3x)",
+    "sqrt(7cos(2x))",
+    "abs(3sin(8x))",
+    "abs(8cos(16x))",
+    "x^(4/3)/200",
+    "3/x",
+    "cos(x/3) + x/60",
+    "log(x)"
+  ];
+
+  let showIndex = 0;
+
   const computedStyle = getComputedStyle(canvas1);
   const width = computedStyle.getPropertyValue("width");
   const height = computedStyle.getPropertyValue("height");
 
+  // reset canvas w/h according to viewport
   canvas1.width = canvas2.width = parseInt(width);
   canvas1.height = canvas2.height = parseInt(height);
 
+  // start showcase
+  const showInterval = setInterval(drawShowcase, 4000);
+  drawShowcase();
+
+  // stop showcase on input focus
+  input.addEventListener("focus", () => {
+    clearInterval(showInterval);
+  });
+
+  // redraw on submit
   submit.addEventListener("click", event => {
     event.preventDefault();
     draw(input.value);
   });
 
-  draw(input.value);
+  function drawShowcase() {
+    input.value = showcase[showIndex];
+    draw(input.value);
+    showIndex = showIndex < showcase.length - 1
+      ? (showIndex + 1)
+      : 0;
+  }
 
   function draw(expression) {
     const compiled = mathjs.compile(expression);
