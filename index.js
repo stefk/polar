@@ -66,10 +66,17 @@ function drawCartesian(ctx, expression, unitsPerAxe) {
 }
 
 function drawPolar(ctx, expression, unitsPerAxe) {
-  const angleInc = Math.PI / 1000;
+  // rough estimate of periodicity, to avoid drawing the same
+  // figure over and over, which darkens the path
+  const val1 = expression.eval({ x: 0 });
+  const val2 = expression.eval({ x: 2 * Math.PI });
+  const isPeriodic = Math.abs(val1 - val2) < 1e-14;
+
+  const halfRot = (isPeriodic ? 1 : 100) * Math.PI;
+  const rotInc = Math.PI / 500;
   const points = [];
 
-  for (let t = 0; t < 2 * Math.PI; t += angleInc) {
+  for (let t = -halfRot, i = 0; t < halfRot; t += rotInc, i++) {
     const r = expression.eval({ x: t });
 
     if (r < 0) {
@@ -78,6 +85,7 @@ function drawPolar(ctx, expression, unitsPerAxe) {
 
     const x = r * Math.cos(t);
     const y = r * Math.sin(t);
+
     points.push([x, y]);
   }
 
