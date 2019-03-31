@@ -39,6 +39,7 @@ button {
 }
 
 canvas {
+  min-width: 42%;
   margin: 10px;
   border: solid #88abff 1px;
   background: white;
