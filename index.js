@@ -97,7 +97,7 @@ function drawPoints(ctx, points, unitsPerAxe) {
       continue;
     }
 
-    const mappedX = width / 2 - x * scale;
+    const mappedX = width / 2 + x * scale;
     const mappedY = height / 2 - y * scale;
 
     ctx.lineTo(mappedX, mappedY);
