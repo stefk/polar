@@ -10,6 +10,13 @@ const mathjs = require("mathjs");
   const polarCtx = canvas2.getContext("2d");
   const unitsPerAxe = 16;
 
+  const computedStyle = getComputedStyle(canvas1);
+  const width = computedStyle.getPropertyValue("width");
+  const height = computedStyle.getPropertyValue("height");
+
+  canvas1.width = canvas2.width = parseInt(width);
+  canvas1.height = canvas2.height = parseInt(height);
+
   submit.addEventListener("click", event => {
     event.preventDefault();
     draw(input.value);
