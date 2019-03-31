@@ -1,0 +1,45 @@
+body {
+  background-image: linear-gradient(
+    to right,
+    #88abff,
+    #eaeaea
+  );
+}
+
+h1 {
+  font-family: monospace;
+  font-size: 14px;
+  letter-spacing: 14px;
+  color: white;
+}
+
+form {
+  display: block;
+  margin: 20px;
+  text-align: center;
+}
+
+input, button {
+  padding: 4px;
+  border: 1px solid #88abff;
+  border-radius: 2px;
+  font-family: monospace;
+  letter-spacing: 0.02rem;
+  outline-color: blue;
+}
+
+button {
+  border-color: white;
+  background: #88abff;
+  color: white;
+}
+
+.container {
+  text-align: center;
+}
+
+canvas {
+  margin: 10px;
+  border: solid #88abff 1px;
+  background: white;
+}
