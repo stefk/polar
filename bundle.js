@@ -21,7 +21,8 @@ const mathjs = require("mathjs");
     "x^(4/3)/200",
     "3/x",
     "cos(x/3) + x/60",
-    "log(x)"
+    "log(x)",
+    "12/log(x)"
   ];
 
   let showIndex = 0;
@@ -35,7 +36,7 @@ const mathjs = require("mathjs");
   canvas1.height = canvas2.height = parseInt(height);
 
   // start showcase
-  const showInterval = setInterval(drawShowcase, 4000);
+  const showInterval = setInterval(drawShowcase, 3000);
   drawShowcase();
 
   // stop showcase on input focus
