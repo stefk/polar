@@ -30,7 +30,7 @@
   "scripts": {
     "build": "webpack --mode=production",
     "dev": "webpack --watch --mode=development",
-    "serve": "python -m SimpleHTTPServer",
-    "types": "tsc"
+    "serve": "cd public && python -m SimpleHTTPServer",
+    "typecheck": "tsc"
   }
 }
