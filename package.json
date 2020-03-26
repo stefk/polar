@@ -6,7 +6,10 @@
   "author": "Stéphane Klein",
   "license": "MIT",
   "dependencies": {
-    "mathjs": "^5.8.0"
+    "mathjs": "^5.8.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -20,6 +23,7 @@
   },
   "scripts": {
     "build": "webpack --mode=production",
+    "dev": "webpack --watch --mode=development",
     "serve": "python -m SimpleHTTPServer"
   }
 }
