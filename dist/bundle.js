@@ -97812,7 +97812,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 var unitsPerAxe = 8;
-var showcase = ["3", "x", "x/10", "2sin(3x)", "sqrt(7cos(2x))", "abs(3sin(8x))", "abs(8cos(16x))", "x^(4/3)/200", "3/x", "cos(x/3) + x/60", "log(x)", "12/log(x)"];
+var showcase = ["3", "x", "x/10", "2sin(3x)", "sqrt(7cos(2x))", "abs(3sin(8x))", "abs(8cos(16x))", "x^(4/3)/200", "3/x", "cos(x/3) + x/60", "log(x)", "12/log(x)", "cos(x/3) + x/60 + tan(x)"];
 var GlobalStyle = Object(styled_components__WEBPACK_IMPORTED_MODULE_1__["createGlobalStyle"])(_templateObject());
 var Title = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].h1(_templateObject2());
 var Form = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].form(_templateObject3());
@@ -97856,7 +97856,7 @@ function App() {
     cartesianCanvas.height = polarCanvas.height = parseInt(height);
     cartesianCtxRef.current = cartesianCanvas.getContext("2d");
     polarCtxRef.current = polarCanvas.getContext("2d");
-    showcaseIntervalRef.current = setInterval(drawShowcase, 3000);
+    showcaseIntervalRef.current = setInterval(drawShowcase, 2500);
     drawShowcase();
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GlobalStyle, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Title, null, "Polar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Form, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FunctionInput, {

@@ -17,7 +17,8 @@ const showcase = [
   "3/x",
   "cos(x/3) + x/60",
   "log(x)",
-  "12/log(x)"
+  "12/log(x)",
+  "cos(x/3) + x/60 + tan(x)"
 ];
 
 const GlobalStyle = createGlobalStyle`
@@ -115,7 +116,7 @@ export default function App() {
 
     cartesianCtxRef.current = cartesianCanvas.getContext("2d");
     polarCtxRef.current = polarCanvas.getContext("2d");
-    showcaseIntervalRef.current = setInterval(drawShowcase, 3000);
+    showcaseIntervalRef.current = setInterval(drawShowcase, 2500);
 
     drawShowcase();
   }, []);
