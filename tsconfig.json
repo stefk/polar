@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "noEmit": true,
+    "strict": true,
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "es2018"]
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
