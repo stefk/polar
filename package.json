@@ -2,17 +2,24 @@
   "name": "polar",
   "version": "1.0.0",
   "description": "Polar coordinates plotter",
-  "main": "index.js",
+  "private": true,
   "author": "Stéphane Klein",
   "license": "MIT",
   "dependencies": {
     "mathjs": "^5.8.0"
   },
   "devDependencies": {
-    "browserify": "^16.5.0"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "browserify": "^16.5.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "build": "browserify index.js -o bundle.js",
+    "build": "webpack --mode=production",
     "serve": "python -m SimpleHTTPServer"
   }
 }
