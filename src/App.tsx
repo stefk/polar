@@ -1,24 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
+import Modal from "react-modal";
 import styled, { createGlobalStyle } from "styled-components";
 import { compile } from "mathjs";
 import { draw, isValidExpr } from "./lib";
+import { HelpModal, InvalidInputModal } from "./Modal";
 
 const unitsPerAxe = 8;
 
 const showcase = [
-  "3",
-  "x",
-  "x/10",
-  "2sin(3x)",
-  "sqrt(7cos(2x))",
-  "abs(3sin(8x))",
-  "abs(8cos(16x))",
-  "x^(4/3)/200",
-  "3/x",
-  "cos(x/3) + x/60",
-  "log(x)",
-  "12/log(x)",
-  "cos(x/3) + x/60 + tan(x)"
+  "y = 3",
+  "y = x",
+  "y = x/10",
+  "y = 2sin(3x)",
+  "y = sqrt(7cos(2x))",
+  "y = abs(3sin(8x))",
+  "y = abs(8cos(16x))",
+  "y = x^(4/3)/200",
+  "y = 3/x",
+  "y = cos(x/3) + x/60",
+  "y = log(x)",
+  "y = 12/log(x)",
+  "y = cos(x/3) + x/60 + tan(x)"
 ];
 
 const GlobalStyle = createGlobalStyle`
@@ -38,13 +40,15 @@ const Title = styled.h1`
   color: white;
 `;
 
-const Form = styled.form`
-  display: block;
-  margin: 20px;
-  text-align: center;
+const ControlBar = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
 `;
 
 const inputStyle = `
+  margin: auto 3px;
   padding: 4px;
   border: 1px solid #88abff;
   border-radius: 2px;
@@ -53,16 +57,32 @@ const inputStyle = `
   outline-color: blue;
 `;
 
-const FunctionInput = styled.input`
+const buttonStyle = `
   ${inputStyle}
-  margin-right: 4px;
-`;
-
-const Submit = styled.button`
-  ${inputStyle}
+  padding-left: 7px;
+  padding-right: 7px;
   border-color: white;
   background: #88abff;
   color: white;
+  cursor: pointer;
+`;
+
+const HelpButton = styled.button`
+  ${buttonStyle}
+`;
+
+const Form = styled.form`
+  margin: 0;
+`;
+
+const FunctionInput = styled.input`
+  ${inputStyle}
+  width: 242px;
+  text-align: center;
+`;
+
+const Submit = styled.button`
+  ${buttonStyle}
 `;
 
 const Container = styled.div`
@@ -78,6 +98,9 @@ const Canvas = styled.canvas`
 
 export default function App() {
   const [expression, setExpression] = useState("");
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const [isInputModalOpen, setIsInputModalOpen] = useState(false);
+
   const showcaseIntervalRef = useRef<number>();
   const showcaseIndexRef = useRef<number>(0);
   const cartesianCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -125,34 +148,50 @@ export default function App() {
     <>
       <GlobalStyle/>
       <Title>Polar</Title>
-      <Form>
-        <FunctionInput
-          type="text"
-          value={expression}
-          autoCapitalize="none"
-          autoCorrect="off"
-          onChange={e => setExpression(e.target.value)}
-          onFocus={() => clearInterval(showcaseIntervalRef.current)}
-        />
-        <Submit
-          type="submit"
-          onClick={e => {
-            e.preventDefault();
-
-            if (isValidExpr(expression)) {
-              doDraw(expression);
-            } else {
-              alert("Invalid input");
-            }
-          }}
+      <ControlBar>
+        <HelpButton
+          aria-label="Help"
+          onClick={() => setIsHelpModalOpen(true)}
         >
-          Draw
-        </Submit>
-      </Form>
+          ?
+        </HelpButton>
+        <Form>
+          <FunctionInput
+            type="text"
+            value={expression}
+            autoCapitalize="none"
+            autoCorrect="off"
+            onChange={e => setExpression(e.target.value)}
+            onFocus={() => clearInterval(showcaseIntervalRef.current)}
+          />
+          <Submit
+            type="submit"
+            onClick={e => {
+              e.preventDefault();
+
+              if (isValidExpr(expression)) {
+                doDraw(expression);
+              } else {
+                setIsInputModalOpen(true);
+              }
+            }}
+          >
+            Draw
+          </Submit>
+        </Form>
+      </ControlBar>
       <Container>
         <Canvas ref={cartesianCanvasRef} width="300" height="300"/>
         <Canvas ref={polarCanvasRef} width="300" height="300"/>
       </Container>
+      <HelpModal
+        isOpen={isHelpModalOpen}
+        close={() => setIsHelpModalOpen(false)}
+      />
+      <InvalidInputModal
+        isOpen={isInputModalOpen}
+        close={() => setIsInputModalOpen(false)}
+      />
     </>
   );
 };
