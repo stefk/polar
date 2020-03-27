@@ -1,16 +1,74 @@
 import { compile, EvalFunction } from "mathjs";
 
+export function isValidExpr(expression: string): boolean {
+  try {
+    const fn = compile(expression);
+
+    return typeof fn.evaluate({ x: 1 }) === "number";
+  } catch (err) {
+    return false;
+  }
+}
+
 export function draw(
   expression: string,
   cartesianCtx: CanvasRenderingContext2D,
   polarCtx: CanvasRenderingContext2D,
   unitsPerAxe: number
 ) {
-  const compiled = compile(expression);
+  const fn = compile(expression);
+
   drawBasis(cartesianCtx);
   drawBasis(polarCtx);
-  drawCartesian(cartesianCtx, compiled, unitsPerAxe);
-  drawPolar(polarCtx, compiled, unitsPerAxe);
+
+  const cartesian = getCartesianGraph(fn, unitsPerAxe);
+  const polar = getPolarGraph(fn);
+
+  drawPoints(cartesianCtx, cartesian, unitsPerAxe);
+  drawPoints(polarCtx, polar, unitsPerAxe);
+}
+
+function getCartesianGraph(
+  fn: EvalFunction,
+  unitsPerAxe: number
+): number[][] {
+  const halfAxe = unitsPerAxe / 2;
+  const xInc = unitsPerAxe / 10000;
+  const points = [];
+
+  for (let x = -halfAxe; x < halfAxe; x += xInc) {
+    const y = fn.evaluate({ x });
+    points.push([x, y]);
+  }
+
+  return points;
+}
+
+function getPolarGraph(fn: EvalFunction): number[][] {
+  // rough estimate of periodicity, to avoid drawing the same
+  // figure over and over, which darkens the path
+  const val1 = fn.evaluate({ x: 0 });
+  const val2 = fn.evaluate({ x: 2 * Math.PI });
+  const isPeriodic = Math.abs(val1 - val2) < 1e-14;
+
+  const halfRot = (isPeriodic ? 1 : 100) * Math.PI;
+  const rotInc = Math.PI / 500;
+  const points = [];
+
+  for (let t = -halfRot, i = 0; t < halfRot; t += rotInc, i++) {
+    const r = fn.evaluate({ x: t });
+
+    if (r < 0) {
+      continue;
+    }
+
+    const x = r * Math.cos(t);
+    const y = r * Math.sin(t);
+
+    points.push([x, y]);
+  }
+
+   return points;
 }
 
 function drawBasis(ctx: CanvasRenderingContext2D) {
@@ -31,54 +89,6 @@ function drawBasis(ctx: CanvasRenderingContext2D) {
   ctx.moveTo(width / 2, 0);
   ctx.lineTo(width / 2, height);
   ctx.stroke();
-}
-
-function drawCartesian(
-  ctx: CanvasRenderingContext2D,
-  expression: EvalFunction,
-  unitsPerAxe: number
-) {
-  const halfAxe = unitsPerAxe / 2;
-  const xInc = unitsPerAxe / 10000;
-  const points = [];
-
-  for (let x = -halfAxe; x < halfAxe; x += xInc) {
-    const y = expression.evaluate({ x });
-    points.push([x, y]);
-  }
-
-  drawPoints(ctx, points, unitsPerAxe);
-}
-
-function drawPolar(
-  ctx: CanvasRenderingContext2D,
-  expression: EvalFunction,
-  unitsPerAxe: number
-) {
-  // rough estimate of periodicity, to avoid drawing the same
-  // figure over and over, which darkens the path
-  const val1 = expression.evaluate({ x: 0 });
-  const val2 = expression.evaluate({ x: 2 * Math.PI });
-  const isPeriodic = Math.abs(val1 - val2) < 1e-14;
-
-  const halfRot = (isPeriodic ? 1 : 100) * Math.PI;
-  const rotInc = Math.PI / 500;
-  const points = [];
-
-  for (let t = -halfRot, i = 0; t < halfRot; t += rotInc, i++) {
-    const r = expression.evaluate({ x: t });
-
-    if (r < 0) {
-      continue;
-    }
-
-    const x = r * Math.cos(t);
-    const y = r * Math.sin(t);
-
-    points.push([x, y]);
-  }
-
-   drawPoints(ctx, points, unitsPerAxe);
 }
 
 function drawPoints(

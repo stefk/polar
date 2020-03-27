@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { compile } from "mathjs";
-import { draw } from "./lib";
+import { draw, isValidExpr } from "./lib";
 
 const unitsPerAxe = 8;
 
@@ -138,7 +138,12 @@ export default function App() {
           type="submit"
           onClick={e => {
             e.preventDefault();
-            doDraw(expression);
+
+            if (isValidExpr(expression)) {
+              doDraw(expression);
+            } else {
+              alert("Invalid input");
+            }
           }}
         >
           Draw
