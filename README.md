@@ -15,5 +15,5 @@ their regular cartesian counterparts.
 
 If you're interested in a webgl-based version of
 this app, focusing on [parametric](https://en.wikipedia.org/wiki/Parametric_equation)
-graphs, see [this](https://stefk.github.io/parametric/).
+graphs, see [this](https://github.com/stefk/parametric).
 
