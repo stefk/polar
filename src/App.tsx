@@ -40,6 +40,12 @@ const Title = styled.h1`
   color: white;
 `;
 
+const GithubLink = styled.a`
+  position: absolute;
+  top: 6px;
+  right: 6px;
+`;
+
 const ControlBar = styled.div`
   display: flex;
   justify-content: center;
@@ -148,6 +154,17 @@ export default function App() {
     <>
       <GlobalStyle/>
       <Title>Polar</Title>
+      <GithubLink
+        href="https://github.com/stefk/polar"
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        <img
+          src="github-logo.svg"
+          alt="Github link"
+          width="18px"
+        />
+      </GithubLink>
       <ControlBar>
         <HelpButton
           aria-label="Help"
