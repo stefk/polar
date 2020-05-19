@@ -2,6 +2,8 @@
 
 [Demo](https://stefk.github.io/polar/)
 
+![Screenshot](https://raw.githubusercontent.com/stefk/polar/master/public/screenshot.png)
+
 This app allows you to draw the graph of a function
 of a single real variable in both cartesian and
 [polar coordinates](https://en.wikipedia.org/wiki/Polar_coordinate_system).
